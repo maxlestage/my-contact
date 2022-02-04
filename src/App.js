@@ -25,10 +25,6 @@ const App = () => {
       number: newNumber,
     };
 
-    // const allPersons = persons.map((person) => {
-    //   return person.name;
-    // });
-
     allPersons.forEach((name) => {
       if (name === newName) {
         return alert(`${newName} is already added to phonebook`);
@@ -53,6 +49,11 @@ const App = () => {
   const search = (e) => setSearchPerson(e.target.value);
 
   console.log(searchPerson);
+
+  const filteredNames = allPersons.filter((name) => {
+    return name.includes(searchPerson);
+  });
+
   return (
     <div>
       <h1>Phonebook</h1>
@@ -60,17 +61,6 @@ const App = () => {
         <p>
           filter shown with : <input value={searchPerson} onChange={search} />
         </p>
-        <div>
-          {allPersons.filter((name) => name.includes(searchPerson)) ? (
-            <ul>
-              {allPersons.map((name) => (
-                <li key={name}>{name}</li>
-              ))}
-            </ul>
-          ) : (
-            <p>Nothing</p>
-          )}
-        </div>
       </div>
       <h2>add a new</h2>
       <form onSubmit={addPerson}>
@@ -85,17 +75,17 @@ const App = () => {
         </div>
       </form>
       <h2>Numbers</h2>
-      {/* <div>debug Name: {newName}</div>
-      <div>debug Number: {newNumber}</div> */}
-      <ul>
-        {persons.map((person) => {
-          return (
-            <li key={person.name}>
-              {person.name}: {person.number}{" "}
-            </li>
-          );
-        })}
-      </ul>
+      <div>
+        {filteredNames.length > 0 ? (
+          <ul>
+            {filteredNames.map((name) => (
+              <li key={name}>{name}</li>
+            ))}
+          </ul>
+        ) : (
+          <p>Nothing</p>
+        )}
+      </div>
     </div>
   );
 };
